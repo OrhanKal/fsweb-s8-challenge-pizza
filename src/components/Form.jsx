@@ -44,6 +44,10 @@ export default function Form() {
         const toppingPrice = 5; //her malzeme 5tl
 
         if (checked) {
+            if (toppings.length >= 10) {
+                alert("En fazla 10 malzeme seçebilirsiniz.");
+                return;
+            }
             setToppings((prev) => [...prev, value]);
         } else {
             setToppings((prev) => prev.filter((topping) => topping !== value));
@@ -61,6 +65,10 @@ export default function Form() {
         event.preventDefault();
         if (name.length < 3) {
             alert("İsim en az 3 karakter olmalıdır.");
+            return;
+        }
+        if (toppings.length < 4) {
+            alert("En az 4 malzeme seçmelisiniz.");
             return;
         }
         const payLoad = {
@@ -196,7 +204,7 @@ export default function Form() {
                         <p>Toplam</p>
                         <p>{totalPrice.toFixed(2)}₺</p>
                     </div>
-                    <button>SİPARİŞ VER</button>
+                    <button type="submit">SİPARİŞ VER</button>
                 </div>
             </section>
         </form>
