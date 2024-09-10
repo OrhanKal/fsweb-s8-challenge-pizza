@@ -67,8 +67,8 @@ export default function Form() {
             alert("İsim en az 3 karakter olmalıdır.");
             return;
         }
-        if (toppings.length < 4) {
-            alert("En az 4 malzeme seçmelisiniz.");
+        if (toppings.length < 4 && toppings.length > 10) {
+            alert("En az 4 malzeme seçmelisiniz. En fazla 10 malzeme seçmelisiniz.");
             return;
         }
         const payLoad = {
