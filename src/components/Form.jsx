@@ -9,6 +9,7 @@ export default function Form() {
     const [toppings, setToppings] = useState([]);
     const [quantity, setQuantity] = useState(1);
     const [totalPrice, setTotalPrice] = useState(85.50);
+    const [name, setName] = useState('');
 
     const toppingsList = [
         { id: 'pepperoni', name: 'Pepperoni' },
@@ -48,6 +49,9 @@ export default function Form() {
             setToppings((prev) => prev.filter((topping) => topping !== value));
         }
     };
+    const handleNameChange = (e) => {
+        setName(e.target.value);
+    };
 
     const handleQuantityChange = (delta) => {
         setQuantity((prev) => Math.max(1, prev + delta));
@@ -55,10 +59,15 @@ export default function Form() {
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        if (name.length < 3) {
+            alert("İsim en az 3 karakter olmalıdır.");
+            return;
+        }
         const payLoad = {
             boyut: pizzaSize,
             kalınlık: crustSize,
-            malzemeler: toppings
+            malzemeler: toppings,
+            isim: name
         }
         axios.post("https://reqres.in/api/pizza", payLoad)
             .then((response) => {
@@ -147,6 +156,17 @@ export default function Form() {
                             </div>
                         ))}
                     </form>
+                </div>
+                <div>
+                    <h2>İsim</h2>
+                    <input
+                        type="text"
+                        value={name}
+                        onChange={handleNameChange}
+                        placeholder="İsminizi girin"
+                        required
+                        minLength="3"
+                    />
                 </div>
                 <div>
                     <h2>Sipariş Notu</h2>
