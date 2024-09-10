@@ -1,5 +1,7 @@
+import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { ButtonGroup } from 'reactstrap';
+
 
 export default function Form() {
     const [pizzaSize, setPizzaSize] = useState('');
@@ -7,6 +9,22 @@ export default function Form() {
     const [toppings, setToppings] = useState([]);
     const [quantity, setQuantity] = useState(1);
     const [totalPrice, setTotalPrice] = useState(85.50);
+
+    const toppingsList = [
+        { id: 'pepperoni', name: 'Pepperoni' },
+        { id: 'sosis', name: 'Sosis' },
+        { id: 'kanadajambonu', name: 'Kanada Jambonu' },
+        { id: 'tavukizgara', name: 'Tavuk Izgara' },
+        { id: 'sogan', name: 'Soğan' },
+        { id: 'domates', name: 'Domates' },
+        { id: 'misir', name: 'Mısır' },
+        { id: 'sucuk', name: 'Sucuk' },
+        { id: 'jalepeno', name: 'Jalepeno' },
+        { id: 'sarimsak', name: 'Sarımsak' },
+        { id: 'biber', name: 'Biber' },
+        { id: 'ananas', name: 'Ananas' },
+        { id: 'kabak', name: 'Kabak' },
+    ];
 
     useEffect(() => {
         calculateTotal();
@@ -35,6 +53,21 @@ export default function Form() {
         setQuantity((prev) => Math.max(1, prev + delta));
     };
 
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        const payLoad = {
+            boyut: pizzaSize,
+            kalınlık: crustSize,
+            malzemeler: toppings
+        }
+        axios.post("https://reqres.in/api/pizza", payLoad)
+            .then((response) => {
+                console.log("sipariş özet: ", response.data)
+                    .catch(error => {
+                        console.log("sipariş hatası: ", error)
+                    })
+            })
+    }
     const calculateTotal = () => {
         const basePrice = 85.50;
         const toppingPrice = toppings.length * 5;
@@ -43,7 +76,7 @@ export default function Form() {
     };
 
     return (
-        <div>
+        <form onSubmit={handleSubmit}>
             <header>
                 <h1>Teknolojik Yemekler</h1>
                 <p>Anasayfa-Sipariş Oluştur</p>
@@ -61,33 +94,33 @@ export default function Form() {
                     <p>Frontent Dev olarak hala position:absolute kullanıyorsan bu çok acı pizza tam sana göre. Pizza, domates, peynir ve genellikle çeşitli diğer malzemelerle kaplanmış, daha sonra geleneksel olarak odun ateşinde bir fırında yüksek sıcaklıkta pişirilen, genellikle yuvarlak, düzleştirilmiş mayalı buğday bazlı hamurdan oluşan İtalyan kökenli lezzetli bir yemektir. . Küçük bir pizzaya bazen pizzetta denir.</p>
                 </div>
                 <div className="boyut-hamur-sec">
-                    <form className="boyut-sec">
+                    <div className="boyut-sec">
                         <h2>Boyut Seç</h2>
-                        <input 
-                            type="radio" 
+                        <input
+                            type="radio"
                             id="option1"
                             name="pizzaSize"
                             value="Küçük"
                             onChange={handleSizeChange}
-                        /> 
+                        />
                         <label htmlFor="option1">Küçük</label>
-                        <input 
-                            type="radio" 
+                        <input
+                            type="radio"
                             id="option2"
                             name="pizzaSize"
                             value="Orta"
                             onChange={handleSizeChange}
-                        /> 
+                        />
                         <label htmlFor="option2">Orta</label>
-                        <input 
-                            type="radio" 
+                        <input
+                            type="radio"
                             id="option3"
                             name="pizzaSize"
                             value="Büyük"
                             onChange={handleSizeChange}
-                        /> 
+                        />
                         <label htmlFor="option3">Büyük</label>
-                    </form>
+                    </div>
                     <div className="hamur-sec">
                         <h2>Hamur Seç</h2>
                         <select name="hamur" id="hamur" onChange={handleCrustChange}>
@@ -102,44 +135,34 @@ export default function Form() {
                     <h2>Ek Malzemeler</h2>
                     <p>En Fazla 10 malzeme seçebilirsiniz. 5₺</p>
                     <form>
-                        <input
-                            type="checkbox"
-                            id="pepperoni"
-                            value="Pepperoni"
-                            onChange={handleToppingChange}
-                        />
-                        <label htmlFor="pepperoni">Pepperoni</label>
-                        <input
-                            type="checkbox"
-                            id="Sosis"
-                            value="Sosis"
-                            onChange={handleToppingChange}
-                        />
-                        <label htmlFor="Sosis">Sosis</label>
-                        <input
-                            type="checkbox"
-                            id="kanadajambonu"
-                            value="kanadajambonu"
-                            onChange={handleToppingChange}
-                        />
-                        <label htmlFor="kanadajambonu">Kanada Jambonu</label>
+                        {toppingsList.map((topping) => (
+                            <div key={topping.id}>
+                                <input
+                                    type="checkbox"
+                                    id={topping.id}
+                                    value={topping.name}
+                                    onChange={handleToppingChange}
+                                />
+                                <label htmlFor={topping.id}>{topping.name}</label>
+                            </div>
+                        ))}
                     </form>
                 </div>
                 <div>
                     <h2>Sipariş Notu</h2>
-                    <textarea 
-                        id="w3review" 
-                        name="w3review" 
-                        rows="4" 
+                    <textarea
+                        id="w3review"
+                        name="w3review"
+                        rows="4"
                         cols="50"
                         placeholder="Siparişine eklemek istediğin bir not var mı?"
                     />
                 </div>
                 <div className="counter">
                     <ButtonGroup>
-                    <button onClick={() => handleQuantityChange(-1)}>-</button>
-                    <p>{quantity}</p>
-                    <button onClick={() => handleQuantityChange(1)}>+</button>
+                        <button type='button' onClick={() => handleQuantityChange(-1)}>-</button>
+                        <p>{quantity}</p>
+                        <button type='button' onClick={() => handleQuantityChange(1)}>+</button>
                     </ButtonGroup>
 
                 </div>
@@ -156,6 +179,6 @@ export default function Form() {
                     <button>SİPARİŞ VER</button>
                 </div>
             </section>
-        </div>
+        </form>
     );
 }

@@ -18,3 +18,19 @@ section {
   margin-right: auto;
   max-width: 570px;
 }
+
+.pizza-price-rate {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pizza-price {
+  font-weight: 700;
+  font-size: 1.5rem;
+}
+.pizza-rate {
+  display: flex;
+  justify-content: space-between;
+  width: 20%;
+}
