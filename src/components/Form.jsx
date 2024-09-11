@@ -10,6 +10,9 @@ export default function Form() {
     const [quantity, setQuantity] = useState(1);
     const [totalPrice, setTotalPrice] = useState(85.50);
     const [name, setName] = useState('');
+    const [nameError, setNameError] = useState('');
+    const [toppingsError, setToppingsError] = useState('');
+
 
     const toppingsList = [
         { id: 'pepperoni', name: 'Pepperoni' },
@@ -43,18 +46,32 @@ export default function Form() {
         const { value, checked } = e.target;
         const toppingPrice = 5; //her malzeme 5tl
 
+        let updatedToppings;
         if (checked) {
-            if (toppings.length >= 10) {
-                alert("En fazla 10 malzeme seçebilirsiniz.");
-                return;
-            }
-            setToppings((prev) => [...prev, value]);
+            updatedToppings = [...toppings, value];
         } else {
-            setToppings((prev) => prev.filter((topping) => topping !== value));
+            updatedToppings = toppings.filter((topping) => topping !== value);
         }
+
+        // Hata mesajlarını kontrol et
+        if (updatedToppings.length < 4) {
+            setToppingsError("En az 4 malzeme seçmelisiniz.");
+        } else if (updatedToppings.length > 10) {
+            setToppingsError("En fazla 10 malzeme seçebilirsiniz.");
+        } else {
+            setToppingsError('');
+        }
+
+        // Topping'leri güncelle
+        setToppings(updatedToppings);
     };
     const handleNameChange = (e) => {
         setName(e.target.value);
+        if (e.target.value.length < 3) {
+            setNameError("İsim en az 3 karakter olmalıdır.");
+        } else {
+            setNameError('');
+        }
     };
 
     const handleQuantityChange = (delta) => {
@@ -63,14 +80,27 @@ export default function Form() {
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        let isValid = true;
+
+
         if (name.length < 3) {
-            alert("İsim en az 3 karakter olmalıdır.");
-            return;
+            setNameError("İsim en az 3 karakter olmalıdır.");
+            isValid = false;
+        } else {
+            setNameError('');
         }
-        if (toppings.length < 4 && toppings.length > 10) {
-            alert("En az 4 malzeme seçmelisiniz. En fazla 10 malzeme seçmelisiniz.");
-            return;
+
+
+        if (toppings.length < 4 || toppings.length > 10) {
+            setToppingsError("En az 4, en fazla 10 malzeme seçmelisiniz.");
+            isValid = false;
+        } else {
+            setToppingsError('');
         }
+
+
+        if (!isValid) return;
+
         const payLoad = {
             boyut: pizzaSize,
             kalınlık: crustSize,
@@ -80,10 +110,10 @@ export default function Form() {
         axios.post("https://reqres.in/api/pizza", payLoad)
             .then((response) => {
                 console.log("sipariş özet: ", response.data)
-                    .catch(error => {
-                        console.log("sipariş hatası: ", error)
-                    })
             })
+            .catch(error => {
+                console.log("sipariş hatası: ", error)
+            });
     }
     const calculateTotal = () => {
         const basePrice = 85.50;
@@ -151,19 +181,18 @@ export default function Form() {
                 <div>
                     <h2>Ek Malzemeler</h2>
                     <p>En Fazla 10 malzeme seçebilirsiniz. 5₺</p>
-                    <form>
-                        {toppingsList.map((topping) => (
-                            <div key={topping.id}>
-                                <input
-                                    type="checkbox"
-                                    id={topping.id}
-                                    value={topping.name}
-                                    onChange={handleToppingChange}
-                                />
-                                <label htmlFor={topping.id}>{topping.name}</label>
-                            </div>
-                        ))}
-                    </form>
+                    {toppingsList.map((topping) => (
+                        <div key={topping.id}>
+                            <input
+                                type="checkbox"
+                                id={topping.id}
+                                value={topping.name}
+                                onChange={handleToppingChange}
+                            />
+                            <label htmlFor={topping.id}>{topping.name}</label>
+                        </div>
+                    ))}
+                    {toppingsError && <p style={{ color: 'red', fontSize: '14px' }}>{toppingsError}</p>}
                 </div>
                 <div>
                     <h2>İsim</h2>
@@ -175,6 +204,7 @@ export default function Form() {
                         required
                         minLength="3"
                     />
+                    {nameError && <p style={{ color: 'red', fontSize: '14px' }}>{nameError}</p>}
                 </div>
                 <div>
                     <h2>Sipariş Notu</h2>
@@ -204,7 +234,7 @@ export default function Form() {
                         <p>Toplam</p>
                         <p>{totalPrice.toFixed(2)}₺</p>
                     </div>
-                    <button type="submit">SİPARİŞ VER</button>
+                    <button type="submit" >SİPARİŞ VER</button>
                 </div>
             </section>
         </form>
