@@ -53,7 +53,7 @@ export default function Form() {
             updatedToppings = toppings.filter((topping) => topping !== value);
         }
 
-        // Hata mesajlarını kontrol et
+
         if (updatedToppings.length < 4) {
             setToppingsError("En az 4 malzeme seçmelisiniz.");
         } else if (updatedToppings.length > 10) {
@@ -62,7 +62,6 @@ export default function Form() {
             setToppingsError('');
         }
 
-        // Topping'leri güncelle
         setToppings(updatedToppings);
     };
     const handleNameChange = (e) => {
@@ -121,6 +120,8 @@ export default function Form() {
         const newTotal = basePrice + toppingPrice;
         setTotalPrice(newTotal * quantity);
     };
+
+    const isFormValid = name.length >= 3 && toppings.length >= 4 && toppings.length <= 10;
 
     return (
         <form onSubmit={handleSubmit}>
@@ -234,7 +235,7 @@ export default function Form() {
                         <p>Toplam</p>
                         <p>{totalPrice.toFixed(2)}₺</p>
                     </div>
-                    <button type="submit" >SİPARİŞ VER</button>
+                    <button type="submit" disabled={!isFormValid}>SİPARİŞ VER</button>
                 </div>
             </section>
         </form>
