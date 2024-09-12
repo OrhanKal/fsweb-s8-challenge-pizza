@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
-import { ButtonGroup } from 'reactstrap';
+import { Button, ButtonGroup, Input, Label } from 'reactstrap';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
 
@@ -45,7 +45,6 @@ export default function Form() {
 
     const handleToppingChange = (e) => {
         const { value, checked } = e.target;
-        const toppingPrice = 5; //her malzeme 5tl
 
         let updatedToppings;
         if (checked) {
@@ -129,7 +128,7 @@ export default function Form() {
         <form onSubmit={handleSubmit}>
             <header>
                 <h1>Teknolojik Yemekler</h1>
-                <p>Anasayfa-Sipariş Oluştur</p>
+                <p>Anasayfa-<span>Sipariş Oluştur</span></p>
             </header>
             <section className="form-section">
                 <div className="pizza-info">
@@ -145,34 +144,40 @@ export default function Form() {
                 </div>
                 <div className="boyut-hamur-sec">
                     <div className="boyut-sec">
-                        <h2>Boyut Seç</h2>
-                        <input
-                            type="radio"
-                            id="option1"
-                            name="pizzaSize"
-                            value="Küçük"
-                            onChange={handleSizeChange}
-                        />
-                        <label htmlFor="option1">Küçük</label>
-                        <input
-                            type="radio"
-                            id="option2"
-                            name="pizzaSize"
-                            value="Orta"
-                            onChange={handleSizeChange}
-                        />
-                        <label htmlFor="option2">Orta</label>
-                        <input
-                            type="radio"
-                            id="option3"
-                            name="pizzaSize"
-                            value="Büyük"
-                            onChange={handleSizeChange}
-                        />
-                        <label htmlFor="option3">Büyük</label>
+                        <h3>Boyut Seç</h3>
+                        <div className='boyut-sec-ratio'>
+                            <Input
+                                type="radio"
+                                id="option1"
+                                name="pizzaSize"
+                                value="Küçük"
+                                onChange={handleSizeChange}
+                            />
+                            <Label htmlFor="option1">Küçük</Label>
+                        </div>
+                        <div className='boyut-sec-ratio'>
+                            <Input
+                                type="radio"
+                                id="option2"
+                                name="pizzaSize"
+                                value="Orta"
+                                onChange={handleSizeChange}
+                            />
+                            <Label htmlFor="option2">Orta</Label>
+                        </div>
+                        <div className='boyut-sec-ratio'>
+                            <Input
+                                type="radio"
+                                id="option3"
+                                name="pizzaSize"
+                                value="Büyük"
+                                onChange={handleSizeChange}
+                            />
+                            <Label htmlFor="option3">Büyük</Label>
+                        </div>
                     </div>
                     <div className="hamur-sec">
-                        <h2>Hamur Seç</h2>
+                        <h3>Hamur Seç</h3>
                         <select name="hamur" id="hamur" onChange={handleCrustChange}>
                             <option value="">Hamur kalınlığı</option>
                             <option value="ince">İnce</option>
@@ -181,25 +186,29 @@ export default function Form() {
                         </select>
                     </div>
                 </div>
-                <div>
-                    <h2>Ek Malzemeler</h2>
+                <div className='ekmalzemeler'>
+                    <h3>Ek Malzemeler</h3>
                     <p>En Fazla 10 malzeme seçebilirsiniz. 5₺</p>
-                    {toppingsList.map((topping) => (
-                        <div key={topping.id}>
-                            <input
-                                type="checkbox"
-                                id={topping.id}
-                                value={topping.name}
-                                onChange={handleToppingChange}
-                            />
-                            <label htmlFor={topping.id}>{topping.name}</label>
+                    <div className='ekmalzemeler-container'>
+                        <div className='ekmalzemeler-checkbox'>
+                            {toppingsList.map((topping) => (
+                                <div key={topping.id}>
+                                    <Input
+                                        type="checkbox"
+                                        id={topping.id}
+                                        value={topping.name}
+                                        onChange={handleToppingChange}
+                                    />
+                                    <Label htmlFor={topping.id}>{topping.name}</Label>
+                                </div>
+                            ))}
                         </div>
-                    ))}
+                    </div>
                     {toppingsError && <p style={{ color: 'red', fontSize: '14px' }}>{toppingsError}</p>}
                 </div>
                 <div>
-                    <h2>İsim</h2>
-                    <input
+                    <h3>İsim</h3>
+                    <Input
                         type="text"
                         value={name}
                         onChange={handleNameChange}
@@ -210,34 +219,42 @@ export default function Form() {
                     {nameError && <p style={{ color: 'red', fontSize: '14px' }}>{nameError}</p>}
                 </div>
                 <div>
-                    <h2>Sipariş Notu</h2>
-                    <textarea
-                        id="w3review"
-                        name="w3review"
-                        rows="4"
-                        cols="50"
-                        placeholder="Siparişine eklemek istediğin bir not var mı?"
-                    />
+                    <h3>Sipariş Notu</h3>
+                    <div>
+                        <Input
+                            type='textarea'
+                            id="w3review"
+                            name="w3review"
+                            rows="4"
+                            cols="50"
+                            placeholder="Siparişine eklemek istediğin bir not var mı?"
+                        />
+                    </div>
                 </div>
-                <div className="counter">
-                    <ButtonGroup>
-                        <button type='button' onClick={() => handleQuantityChange(-1)}>-</button>
-                        <p>{quantity}</p>
-                        <button type='button' onClick={() => handleQuantityChange(1)}>+</button>
-                    </ButtonGroup>
+                <div className='sipars-container'>
+                    <div className="counter">
+                        <ButtonGroup className='buttons'>
+                            <Button type='button' onClick={() => handleQuantityChange(-1)}>-</Button>
+                            <p>{quantity}</p>
+                            <Button type='button' onClick={() => handleQuantityChange(1)}>+</Button>
+                        </ButtonGroup>
 
-                </div>
-                <div className="siparis-card">
-                    <h2>Sipariş Toplamı</h2>
-                    <div>
-                        <p>Seçimler</p>
-                        <p>{(toppings.length * 5 * quantity).toFixed(2)}₺</p>
                     </div>
-                    <div>
-                        <p>Toplam</p>
-                        <p>{totalPrice.toFixed(2)}₺</p>
+                    <div className="siparis-card">
+                        <div className="siparis-card-secimler-toplam">
+                            <h3>Sipariş Toplamı</h3>
+                            <div className="siparis-card-secimler">
+                                <p>Seçimler</p>
+                                <p>{(toppings.length * 5 * quantity).toFixed(2)}₺</p>
+                            </div>
+                            <div className="siparis-card-toplam">
+                                <p>Toplam</p>
+                                <p>{totalPrice.toFixed(2)}₺</p>
+                            </div>
+
+                        </div>
+                        <Button type="submit" disabled={!isFormValid} onClick={handleSubmit}>SİPARİŞ VER</Button>
                     </div>
-                    <button type="submit" disabled={!isFormValid} onClick={handleSubmit}>SİPARİŞ VER</button>
                 </div>
             </section>
         </form>

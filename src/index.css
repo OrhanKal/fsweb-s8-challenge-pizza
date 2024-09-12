@@ -1,38 +1,76 @@
-* {
-  border: solid 1px blue;
-  background-color: rgba(0, 0, 255, 0.014);
-}
 
+:root {
+  --sari: #fdc913;
+  --acik-gri: #5f5f5f;
+  --koyu-gri: #292929;
+  --kirmizi: #ce2829;
+  --bej: #faf7f2;
+}
 /*
 --------------------
  BASE SETUP
   BASE SETUP
    BASE SETUP
 --------------------- */
+form {
+  background-color: white
+}
 
 header {
-  background-color: red;
+  background-color: #ce2829;
+}
+
+header h1 {
+  color: var(--bej);
+  padding: 2rem;
+}
+
+p {
+  font-family: Barlow;
+}
+
+p span {
+  font-weight: 700;
+}
+
+.pizza-title {
+  font-size: 130%;
 }
 
 header p {
   margin-left: auto;
   margin-right: auto;
-  max-width: 570px;
+  max-width: 532px;
+  color: var(--bej);
+  padding: 1rem 0;
+
 }
 
 section {
   margin-left: auto;
   margin-right: auto;
-  max-width: 570px;
+  max-width: 532px;
 }
 
-
+div h3{
+  font-size: 110%;
+}
 /*
 --------------------
  FORM COMPONENTS COMMON
   FORM COMPONENTS COMMON
    FORM COMPONENTS COMMON
 --------------------- */
+
+.boyut-hamur-sec {
+  display: flex;
+  justify-content: space-between;
+}
+
+.boyut-sec-radio{
+  display: flex;
+  flex-direction: column;
+}
 
 .pizza-price-rate {
   display: flex;
@@ -48,4 +86,80 @@ section {
   display: flex;
   justify-content: space-between;
   width: 20%;
+}
+
+.ekmalzemeler-container{
+  display: flex;
+  justify-content: center;
+  
+}
+.ekmalzemeler-checkbox {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  width: 100%;
+  gap: 1rem;
+}
+
+.ekmalzemeler-checkbox div {
+  display: flex;
+  width: 28%;
+  gap: 5px;
+}
+.sipars-container{
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 2rem;
+
+}
+
+button{
+  border-style: none;
+}
+
+.buttons {
+  border: 1px solid var(--acik-gri);
+  display: flex;
+  border-radius: 1rem;
+  
+
+}
+.buttons p {
+  padding: 0 1em;
+  margin-top: 1rem;
+  
+  
+}
+
+.buttons button {
+  background-color: var(--sari);
+  padding: 1rem;
+  border-style: none;
+
+}
+
+.siparis-card {
+  width: 50%;
+}
+
+.siparis-card-secimler-toplam {
+  border: 1px solid var(--acik-gri);
+  border-radius: 1rem 1rem 0 0;
+  padding: 1rem;
+}
+
+.siparis-card-secimler{
+  display: flex;
+  justify-content: space-between;
+}
+
+.siparis-card-toplam {
+  color: #ce2829;
+  display: flex;
+  justify-content: space-between;
+}
+
+.siparis-card button {
+  width: 100%;
+  background-color: var(--sari);
 }
