@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { ButtonGroup } from 'reactstrap';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
 
 export default function Form() {
@@ -12,7 +13,7 @@ export default function Form() {
     const [name, setName] = useState('');
     const [nameError, setNameError] = useState('');
     const [toppingsError, setToppingsError] = useState('');
-
+    const history = useHistory();
 
     const toppingsList = [
         { id: 'pepperoni', name: 'Pepperoni' },
@@ -108,6 +109,7 @@ export default function Form() {
         }
         axios.post("https://reqres.in/api/pizza", payLoad)
             .then((response) => {
+                history.push("/success")
                 console.log("sipariş özet: ", response.data)
             })
             .catch(error => {
@@ -173,9 +175,9 @@ export default function Form() {
                         <h2>Hamur Seç</h2>
                         <select name="hamur" id="hamur" onChange={handleCrustChange}>
                             <option value="">Hamur kalınlığı</option>
-                            <option value="20">İnce</option>
-                            <option value="30">Normal</option>
-                            <option value="40">Kalın</option>
+                            <option value="ince">İnce</option>
+                            <option value="normal">Normal</option>
+                            <option value="kalın">Kalın</option>
                         </select>
                     </div>
                 </div>
@@ -235,7 +237,7 @@ export default function Form() {
                         <p>Toplam</p>
                         <p>{totalPrice.toFixed(2)}₺</p>
                     </div>
-                    <button type="submit" disabled={!isFormValid}>SİPARİŞ VER</button>
+                    <button type="submit" disabled={!isFormValid} onClick={handleSubmit}>SİPARİŞ VER</button>
                 </div>
             </section>
         </form>

@@ -3,6 +3,13 @@
   background-color: rgba(0, 0, 255, 0.014);
 }
 
+/*
+--------------------
+ BASE SETUP
+  BASE SETUP
+   BASE SETUP
+--------------------- */
+
 header {
   background-color: red;
 }
@@ -18,6 +25,14 @@ section {
   margin-right: auto;
   max-width: 570px;
 }
+
+
+/*
+--------------------
+ FORM COMPONENTS COMMON
+  FORM COMPONENTS COMMON
+   FORM COMPONENTS COMMON
+--------------------- */
 
 .pizza-price-rate {
   display: flex;
