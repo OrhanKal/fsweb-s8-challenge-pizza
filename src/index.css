@@ -244,3 +244,46 @@ font-family: Londrina Solid;
     font-weight: 300;
     text-align: center;
   }
+
+ @media only screen and (max-width: 540px) {
+  header h1 {
+    font-size: 1.8rem;
+    padding: 1rem;
+  }
+
+  section {
+    margin: 0 1rem;
+    max-width: 100%;
+  }
+
+  .pizza-title {
+    font-size: 1.2rem;
+  }
+
+  .pizza-price {
+    font-size: 1.2rem;
+  }
+
+  .pizza-rate {
+    width: 30%;
+  }
+
+  .ekmalzemeler-checkbox div {
+    width: 45%;
+  }
+
+  .sipars-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .siparis-card {
+    width: 90%;
+  }
+
+  .main-hero {
+    background-position: center;
+    background-size: cover;
+    height: 100vh;
+  }
+}

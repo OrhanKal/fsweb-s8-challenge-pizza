@@ -251,7 +251,6 @@ export default function Form() {
                                 <p>Toplam</p>
                                 <p>{totalPrice.toFixed(2)}₺</p>
                             </div>
-
                         </div>
                         <Button type="submit" disabled={!isFormValid} onClick={handleSubmit}>SİPARİŞ VER</Button>
                     </div>
