@@ -23,6 +23,7 @@ header {
 header h1 {
   color: var(--bej);
   padding: 2rem;
+  font-family: Londrina Solid;
 }
 
 p {
@@ -167,3 +168,79 @@ button{
   width: 100%;
   background-color: var(--sari);
 }
+
+/*.main-hero{
+  background-image: url("/Assets/Iteration-1-assets/home-banner.png");
+  height: 50vw;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+}
+*/
+.main-hero{
+  background-image: url("/Assets/Iteration-1-assets/home-banner.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: fixed;
+  width: 100vw;
+  height: 100%;
+  display: flex;
+  overflow: hidden;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+
+}
+
+.main-hero h1 {
+color: var(--bej);
+font-family: Londrina Solid;
+}
+
+.main-hero p {
+  color: var(--bej);
+  font-size: 5rem;
+  font-family: Roboto Condensed;
+  font-weight: 300;
+  text-align: center;
+}
+
+.main-hero .home-button {
+
+  padding: 1rem 4rem;
+  background-color: var(--sari);
+  border-radius: 2rem;
+  color: var(--koyu-gri);
+  font-weight: 600;
+  font-family: Barlow;
+  border-style: none;
+}
+
+.main-hero-success {
+  background-color: #ce2829;
+  position: fixed;
+  width: 100vw;
+  height: 100%;
+  display: flex;
+  overflow: hidden;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+.main-hero-success h1 {
+  color: var(--bej);
+  font-family: Londrina Solid;
+  }
+  
+  .main-hero-success p {
+    color: var(--bej);
+    font-size: 5rem;
+    font-family: Roboto Condensed;
+    font-weight: 300;
+    text-align: center;
+  }
